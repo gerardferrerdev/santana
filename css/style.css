@@ -1,0 +1,298 @@
+
+/* ------------------------------------------------ */
+/* 1. VARIÁVEIS, RESET E ESTILOS GLOBAIS           */
+/* ------------------------------------------------ */
+
+/* Definição de Cores e Fontes (Variáveis CSS) */
+:root {
+    --color-background-dark: #1a1a1a;   /* Preto Carvão */
+    --color-text-light: #f0f0f0;        /* Prata Claro */
+    --color-accent-gold: #daa520;       /* Dourado Elegante */
+    --color-silver: #cccccc;           /* Prata Secundário */
+    --font-primary: 'Playfair Display', serif;
+    --font-secondary: Arial, sans-serif;
+}
+
+/* Reset Básico para consistência entre navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do Corpo da Página */
+body {
+    background-color: var(--color-background-dark);
+    color: var(--color-text-light);
+    font-family: var(--font-secondary);
+    line-height: 1.6; 
+    scroll-behavior: smooth; /* Prepara para o scroll suave */
+}
+
+/* Estilizando Títulos e Textos */
+h1, h2 {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Destaque Dourado (usado no H1) */
+.gold-text {
+    color: var(--color-accent-gold);
+}
+
+/* Estilo para links (navegação e rodapé) */
+a {
+    color: var(--color-silver);
+    text-decoration: none; /* Remove sublinhado padrão */
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-accent-gold); /* Efeito ao passar o mouse */
+}
+
+/* ------------------------------------------------ */
+/* 2. CABEÇALHO E NAVEGAÇÃO                         */
+/* ------------------------------------------------ */
+
+.main-header {
+    background-color: var(--color-background-dark);
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 1px solid var(--color-silver); 
+}
+
+/* Estilização da "Logo" de Texto */
+.main-header h1 {
+    font-size: 2.5em; 
+    letter-spacing: 5px; 
+    margin: 0; 
+    text-transform: uppercase; 
+    text-shadow: 0 0 5px rgba(218, 165, 32, 0.5); /* Sombra Dourada Sutil */
+}
+
+/* Estilizando a Navegação */
+nav a {
+    margin-left: 25px;
+    font-size: 1.1em;
+    padding: 5px 0;
+    font-family: var(--font-primary);
+}
+
+/* ------------------------------------------------ */
+/* 3. SEÇÕES E RODAPÉ                               */
+/* ------------------------------------------------ */
+
+section {
+    padding: 80px 5%;
+    text-align: center;
+}
+
+.about-section {
+    background-color: #222222; 
+    border-top: 1px solid var(--color-silver);
+    border-bottom: 1px solid var(--color-silver);
+}
+
+.about-section p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1em;
+}
+
+.main-footer {
+    padding: 20px;
+    background-color: var(--color-background-dark);
+    color: var(--color-silver);
+    text-align: center;
+    font-size: 0.9em;
+    border-top: 1px solid var(--color-silver);
+}
+
+/* ------------------------------------------------ */
+/* 4. SEÇÃO DE PORTFÓLIO E GRID                     */
+/* ------------------------------------------------ */
+
+.portfolio-grid {
+    display: grid;
+    /* 3 colunas, responsivas */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.portfolio-item {
+    /* para links (<a>) funcionarem no Grid */
+    display: block; 
+    position: relative; 
+    overflow: hidden;
+    border: 1px solid var(--color-silver); 
+    cursor: pointer; /* Indica que é clicável */
+    
+    /* CORREÇÃO CHAVE 1: Define altura fixa para o contêiner (ex: 300px) */
+    height: 300px; 
+}
+
+.portfolio-item img {
+    width: 100%;
+    
+    /*Imagem preenche 100% da altura do contêiner */
+    height: 100%; 
+    
+    /* Faz a imagem cobrir o espaço sem distorcer, cortando o excesso */
+    object-fit: cover; 
+    
+    display: block;
+    transition: transform 0.4s ease; 
+}
+
+.portfolio-item:hover img {
+    transform: scale(1.05); /* Zoom sutil */
+    opacity: 0.8;
+}
+
+/* Overlay (Texto que aparece ao passar o mouse) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--color-accent-gold);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; 
+    transition: opacity 0.4s ease;
+    font-family: var(--font-primary);
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.portfolio-item:hover .overlay {
+    opacity: 1; 
+}
+
+/* ------------------------------------------------ */
+/* 5. ESTILOS DO MODAL/LIGHTBOX(o zoon ao clicar)   */
+/* ------------------------------------------------ */
+
+/* O Fundo do Modal */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    padding-top: 60px; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.9); 
+}
+
+/* A Imagem dentro do Modal */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%; 
+    max-width: 900px; 
+    animation-name: zoom; 
+    animation-duration: 0.6s;
+    border: 3px solid var(--color-accent-gold); 
+}
+
+/* O Texto (Descrição) da Imagem */
+#caption {
+    margin: 15px auto;
+    display: block;
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+    color: var(--color-silver);
+    padding: 10px 0;
+    font-size: 1.2em;
+    font-family: var(--font-primary);
+}
+
+/* O Botão de Fechar */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: var(--color-text-light);
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--color-accent-gold);
+}
+
+/* Animação de Entrada (Zoom) */
+@keyframes zoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+/* Responsividade (Ajusta o modal para telas pequenas) */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+
+/* ------------------------------------------------ */
+/* 6. ESTILOS DA SEÇÃO DE CONTATO                   */
+/* ------------------------------------------------ */
+
+.contact-section {
+    background-color: var(--color-background-dark); /* Fundo Escuro */
+    padding: 100px 5%; /* Mais padding para destacar */
+}
+
+.contact-prompt {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: var(--color-silver);
+}
+
+.contact-info {
+    margin: 30px auto;
+}
+
+/* Estilização do Link de E-mail (O Botão Dourado Elegante) */
+.email-link {
+    display: inline-block;
+    font-size: 1.5em;
+    font-family: var(--font-primary);
+    
+    /* Cores e Aparência */
+    color: var(--color-accent-gold);
+    border: 2px solid var(--color-accent-gold);
+    padding: 15px 30px;
+    border-radius: 5px; /* Bordas levemente arredondadas */
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    
+    /* Transição suave para o efeito de hover */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse */
+.email-link:hover {
+    color: var(--color-background-dark); /* Texto escuro */
+    background-color: var(--color-accent-gold); /* Fundo dourado */
+    border-color: var(--color-accent-gold); /* Borda dourada */
+    text-shadow: none; /* Remove a sombra se houver alguma herdada */
+}
